@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: user          # 显示的Application名字
+
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        service-id: CONFIG   # 得启动配置中心这个项目才可以
+#      profile: dev   # 读取开发环境文件
+#    bus:
+#      refresh:
+#        enabled: true      #动态刷新配置
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://212.64.11.85:3306/springcloud_sell?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+  redis:
+    host: 212.64.11.85
+    port: 6379
+
+  rabbitmq:
+    host: 212.64.11.85
+    port: 5672                        # 是客户端的地址，不是浏览器管理端的                 #
+    username: guest
+    password: guest
+    listener:
+      simple:
+        concurrency: 5         # 五个通道
+        max-concurrency: 10     # 最大 10 个通道
+        acknowledge-mode: manual       # 默认情况下消息消费者是自动 ack （确认）消息的，如果要手动 ack（确认）则需要修改确认模式为 manual
+        prefetch: 1   #  需要并行1
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://sell-eureka1:8761/eureka, http://sell-eureka2:8762/eureka
+      #  defaultZone: http://212.64.11.85:8761/eureka
+  instance:
+    instance-id: api-gateway   # 自定义服务名称信息
+    prefer-ip-address: true     # 访问路径可以提升显示IP地址
